@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="outer-container">
+    <div class="container">
+<h1>Create Edinica</h1>
+<form id="edinicaForm" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Создать объект</button>
+</form>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#id_sklad').change(function(){
+            var skladId = $(this).val();
+            $.ajax({
+                url: '{% url "get_floors" %}',
+                data: {'sklad_id': skladId},
+                dataType: 'json',
+                success: function(data){
+                    var options = '<option value="">Select Etazh</option>';
+                    $.each(data.etazh_list, function(index, etazh){
+                        options += '<option value="' + etazh.id + '">' + etazh.title + '</option>';
+                    });
+                    $('#id_etazh').html(options);
+                    $('#id_kabinet').html('<option value="">Select Kabinet</option>');
+                }
+            });
+        });
+
+        $('#id_etazh').change(function(){
+            var etazhId = $(this).val();
+            $.ajax({
+                url: '{% url "get_rooms" %}',
+                data: {'etazh_id': etazhId},
+                dataType: 'json',
+                success: function(data){
+                    var options = '<option value="">Select Kabinet</option>';
+                    $.each(data.kabinet_list, function(index, kabinet){
+                        options += '<option value="' + kabinet.id + '">' + kabinet.title + '</option>';
+                    });
+                    $('#id_kabinet').html(options);
+                }
+            });
+        });
+    });
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .header {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+    }
+    .container {
+        width: 90%; /* Уменьшаем ширину контейнера до 90% */
+        max-width: 500px; /* Максимальная ширина контейнера */
+        margin: 20px auto; /* Центрируем контейнер */
+        padding: 20px;
+        background-color: #fff;
+        border: 2px solid #ccc; /* Добавляем границу вокруг контейнера */
+        border-radius: 10px; /* Скругляем углы контейнера */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    label {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    input[type="text"],
+    select {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #ff00b3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        width: auto; /* Делаем ширину кнопки автоматической */
+        margin-top: 15px; /* Добавляем отступ сверху */
+    }
+    button[type="submit"]:hover {
+        background-color: #a00e88;
+    }
+</style>
+
+{% endblock %}

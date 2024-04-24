@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Список складов</h2>
+    <ul>
+        {% for sklad in sklads %}
+            <li>
+                <div class="content-link">
+                    <a href="{% url 'storage:sklads_floors' sklad.id %}"><strong>{{ sklad.title }}</strong></a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+<style>
+.content-link a {
+    display: inline-block;
+    border: 1px solid #000000;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: black;
+}
+</style>

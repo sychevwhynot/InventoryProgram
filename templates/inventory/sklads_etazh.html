@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Этажи склада "{{ sklads.title }}"</h1>
+    <ul>
+        {% for etage in etazh %}
+            <li>
+                <div class="content-link">
+                    <a href="{% url 'storage:floor_cabinets' etage.id %}">{{ etage.title }}</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .edinica-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .edinica-detail-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .edinica-detail-info ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .edinica-detail-info ul li {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .btn-group {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+        }
+    </style>
+
+    <div class="edinica-detail-container">
+        <h1 class="edinica-detail-title">{{ edinica_detail.title }} {{ edinica_detail.brand }} {{ edinica_detail.modelmodel }}</h1>
+        <div class="edinica-detail-info">
+            <ul>
+                <li><strong>Сериный номер:</strong> {{ edinica_detail.seriniy }}</li>
+                <li><strong>Номер инвентаризации:</strong> {{ edinica_detail.invent }}</li>
+                <li><strong>Склад:</strong> {{ edinica_detail.sklad }}</li>
+                <li><strong>Этаж:</strong> {{ edinica_detail.etazh }}</li>
+                <li><strong>Кабинет:</strong> {{ edinica_detail.kabinet }}</li>
+                <li><strong>Производитель:</strong> {{ edinica_detail.brand }}</li>
+                <li><strong>Модель:</strong> {{ edinica_detail.modelmodel }}</li>
+                <li><strong>В ремонте:</strong> {{ edinica_detail.remont }}</li>
+                <li><strong>Ответственный:</strong> {{ edinica_detail.lico }}</li>
+                <li><strong>MAC:</strong> {{ edinica_detail.mac }}</li>
+            </ul>
+            <div class="btn-group">
+                <a href="{% url 'storage:edit_edinica' edinica_detail.pk %}" class="btn btn-primary">Редактировать</a>
+                <form action="{% url 'storage:delete_edinica' edinica_detail.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

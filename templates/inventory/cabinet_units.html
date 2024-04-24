@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Оборудование в кабинете "{{ kabinet.title }}"</h2>
+    <ul>
+        {% for equipment in units %}
+            <li>
+                {{ equipment.title }} - {{ equipment.brand }}
+                <a href="{% url 'storage:edinica_detail' equipment.pk %}">Подробнее</a>
+
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

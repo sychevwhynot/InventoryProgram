@@ -3,3 +3,7 @@ db.sqlite3
 settings.py
 
 logs
+
+media
+
+static
